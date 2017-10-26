@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <!-- The jQuery library is a prerequisite for all jqSuite products -->
+    <script type="text/ecmascript" src="jquery.min.js"></script> 
+    <!-- This is the Javascript file of jqGrid -->   
+    <script type="text/ecmascript" src="jquery.jqGrid.min.js"></script>
+    <!-- This is the localization file of the grid controlling messages, labels, etc.
+    <!-- We support more than 40 localizations -->
+    <script type="text/ecmascript" src="grid.locale-en.js"></script>
+    <!-- A link to a jQuery UI ThemeRoller theme, more than 22 built-in and many more custom -->
+    <link rel="stylesheet" type="text/css" media="screen" href="jquery-ui.css" />
+    <!-- The link to the CSS that the grid needs -->
+    <link rel="stylesheet" type="text/css" media="screen" href="ui.jqgrid.css" />
+
+    <meta charset="utf-8" />
+    <title>jqGrid Loading Data - Dialogs - Edit Controls</title>
+</head>
+<body>
+
+    <style type="text/css">
+
+        /* set the size of the datepicker search control for Order Date*/
+        #ui-datepicker-div { font-size:11px; }
+        
+        /* set the size of the autocomplete search control*/
+        .ui-menu-item {
+            font-size: 11px;
+        }
+
+         .ui-autocomplete { font-size: 11px; position: absolute; cursor: default;z-index:5000 !important;}      
+
+    </style>
+
+    <table id="jqGrid"></table>
+    <div id="jqGridPager" style="margin-top:400px!important"></div>
+
+    <script type="text/javascript"> 
+    
+	
+        $(document).ready(function () {
+
+response = { 
+	"rows":[
+		{"OrderID":"10248","OrderDate":"1996-07-04","CustomerID":"WILMK","ShipName":"Vins et alcools Chevalier","Freight":"32.3800"},
+		{"OrderID":"10249","OrderDate":"1996-07-05","CustomerID":"TRADH","ShipName":"Toms Spezialit\u00e4ten","Freight":"11.6100"},
+		{"OrderID":"10250","OrderDate":"1996-07-08","CustomerID":"HANAR","ShipName":"Hanari Carnes","Freight":"65.8300"},
+		{"OrderID":"10251","OrderDate":"1996-07-08","CustomerID":"VICTE","ShipName":"Victuailles en stock","Freight":"41.3400"},
+		{"OrderID":"10252","OrderDate":"1996-07-09","CustomerID":"SUPRD","ShipName":"Supr\u00eames d\u00e9lices","Freight":"51.3000"},
+		{"OrderID":"10253","OrderDate":"1996-07-10","CustomerID":"HANAR","ShipName":"Hanari Carnes","Freight":"58.1700"},
+		{"OrderID":"10254","OrderDate":"1996-07-11","CustomerID":"CHOPS","ShipName":"Chop-suey Chinese","Freight":"22.9800"},
+		{"OrderID":"10255","OrderDate":"1996-07-12","CustomerID":"RICSU","ShipName":"Richter Supermarkt","Freight":"148.3300"},
+		{"OrderID":"10256","OrderDate":"1996-07-15","CustomerID":"WELLI","ShipName":"Wellington Importadora","Freight":"13.9700"},
+		{"OrderID":"10257","OrderDate":"1996-07-16","CustomerID":"HILAA","ShipName":"HILARI\u00d3N-Abastos","Freight":"81.9100"},
+		{"OrderID":"10258","OrderDate":"1996-07-17","CustomerID":"ERNSH","ShipName":"Ernst Handel","Freight":"140.5100"},
+		{"OrderID":"10259","OrderDate":"1996-07-18","CustomerID":"CENTC","ShipName":"Centro comercial Moctezuma","Freight":"3.2500"},
+		{"OrderID":"10260","OrderDate":"1996-07-19","CustomerID":"OLDWO","ShipName":"Ottilies K\u00e4seladen","Freight":"55.0900"},
+		{"OrderID":"10261","OrderDate":"1996-07-19","CustomerID":"QUEDE","ShipName":"Que Del\u00edcia","Freight":"3.0500"},
+		{"OrderID":"10262","OrderDate":"1996-07-22","CustomerID":"RATTC","ShipName":"Rattlesnake Canyon Grocery","Freight":"48.2900"},
+		{"OrderID":"10263","OrderDate":"1996-07-23","CustomerID":"ERNSH","ShipName":"Ernst Handel","Freight":"146.0600"},
+		{"OrderID":"10264","OrderDate":"1996-07-24","CustomerID":"FOLKO","ShipName":"Folk och f\u00e4 HB","Freight":"3.6700"},
+		{"OrderID":"10265","OrderDate":"1996-07-25","CustomerID":"BLONP","ShipName":"Blondel p\u00e8re et fils","Freight":"55.2800"},
+		{"OrderID":"10266","OrderDate":"1996-07-26","CustomerID":"WARTH","ShipName":"Wartian Herkku","Freight":"25.7300"},
+		{"OrderID":"10267","OrderDate":"1996-07-29","CustomerID":"FRANK","ShipName":"Frankenversand","Freight":"208.5800"},
+		{"OrderID":"10268","OrderDate":"1996-07-30","CustomerID":"GROSR","ShipName":"GROSELLA-Restaurante","Freight":"66.2900"},
+		{"OrderID":"10269","OrderDate":"1996-07-31","CustomerID":"WHITC","ShipName":"White Clover Markets","Freight":"4.5600"},
+		{"OrderID":"10270","OrderDate":"1996-08-01","CustomerID":"WARTH","ShipName":"Wartian Herkku","Freight":"136.5400"},
+		{"OrderID":"10271","OrderDate":"1996-08-01","CustomerID":"SPLIR","ShipName":"Split Rail Beer & Ale","Freight":"4.5400"},
+		{"OrderID":"10272","OrderDate":"1996-08-02","CustomerID":"RATTC","ShipName":"Rattlesnake Canyon Grocery","Freight":"98.0300"},
+		{"OrderID":"10273","OrderDate":"1996-08-05","CustomerID":"QUICK","ShipName":"QUICK-Stop","Freight":"76.0700"},
+		{"OrderID":"10274","OrderDate":"1996-08-06","CustomerID":"VINET","ShipName":"Vins et alcools Chevalier","Freight":"6.0100"},
+		{"OrderID":"10275","OrderDate":"1996-08-07","CustomerID":"MAGAA","ShipName":"Magazzini Alimentari Riuniti","Freight":"26.9300"},
+		{"OrderID":"10276","OrderDate":"1996-08-08","CustomerID":"TORTU","ShipName":"Tortuga Restaurante","Freight":"13.8400"},
+		{"OrderID":"10277","OrderDate":"1996-08-09","CustomerID":"MORGK","ShipName":"Morgenstern Gesundkost","Freight":"125.7700"}
+	]
+};
+
+	
+		   
+		   $("#jqGrid").jqGrid({
+		colModel: [
+			{label: 'EMRG_REF_NO',name: 'OrderID',key:true, width: 80,hidden:true},
+			//{label: 'Title',name: 'EMRG_RINGI_NO', width: 80},
+			{label: 'Provider',name: 'CustomerID', width: 40},
+			{label: 'Date',name: 'OrderDate', width: 80},
+			//{label: 'InitiatedOn',name: 'InitiatedOn', width: 100,formatter: 'date', formatoptions: { srcformat: 'd-m-Y', newformat: 'd-M-Y'}},
+			{label: 'Client',name: 'ShipName', width: 100},//changed by naveen
+			{label: 'Payment',name: 'Freight', width: 90},
+			{label: 'Invoice No',name: 'OrderID', width: 180},
+		],
+		multiselect: false, //Used to select the mulitple rows(checkboxs)
+		shrinkToFit: true, // must be set with frozen columns, otherwise columns will be shrank to fit the grid width,
+		autowidth:true,
+		forceFit:true,
+		altRows: true, //To highlight the alternate rows
+		altclass: 'evenRow', //Class for alternate the rows
+		rowNum: 20, //No.of rows to display initially
+		viewrecords: true, // show the current page, data range and total records on the toolbar
+		rownumbers: true, //To display the Serial Number
+		width: 1500,
+		height: 430, 
+		rownumWidth: 25,
+		hidegrid:false,	// collapse
+		datatype: 'local',
+		scroll: 1, // set the scroll property to 1 to enable paging with scrollbar - virtual loading of records
+		emptyrecords: 'No data to show', // the message will be displayed at the bottom 
+		pager: "#jqGridPager",
+		caption: "Invoice",
+		loadComplete: function( data )
+		{
+			$("#jqGrid").jqGrid('hideCol', 'cb');	// hide check box 
+			//getNoOfRecordsInheader(count);
+			$(".ui-jqgrid-bdiv").attr("style","position: fixed;height: 400px;")
+			$("#gbox_jqGrid").attr("style","height: 480px;position: fixed;")
+		},
+		
+	});		
+	/*To adjust the last column width in grid*/
+	$('.ui-jqgrid-labels > th:last').css('width','100%');
+	$('#jqGrid tr').find("td:last").each(function(){$(this).css('width','100%');})
+	$("#jqGrid").jqGrid('navGrid', '#jqGridPager', {
+    edit: false,
+    add: false,
+    del: false
+	}, {}, {}, {}, {
+    multipleSearch: true,
+    multipleGroup: true
+	});	
+	
+
+            $("#jqGrid").navGrid("#jqGridPager",
+                { edit: true, add: false, del: false, search: false, refresh: true, view: false, align: "left" },
+                { closeAfterEdit: true }
+            );
+			
+			responseArray = [];
+				for(var i=0;i<response.rows.length;i++)
+				{
+					responseArray.push({
+					OrderID : response.rows[i].OrderID,
+					OrderDate : response.rows[i].OrderDate,
+					CustomerID : response.rows[i].CustomerID,
+					ShipName : response.rows[i].ShipName,
+					Freight : response.rows[i].Freight,					
+					});
+				}
+
+				$("#jqGrid")[0].grid.beginReq();
+				$("#jqGrid").jqGrid('clearGridData');
+				$("#jqGrid").jqGrid('setGridParam', {recordtext: "{1} Record(s)", data: responseArray});
+				$("#jqGrid")[0].grid.endReq();
+				$("#jqGrid").trigger('reloadGrid');
+			
+			
+            function createFreightEditElement(value, editOptions) {
+
+                var span = $("<span />");
+                var label = $("<span />", { html: "0" });
+                var radio = $("<input>", { type: "radio", value: "0", name: "freight", id: "zero", checked: (value != 25 && value != 50 && value != 100) });
+                var label1 = $("<span />", { html: "25" });
+                var radio1 = $("<input>", { type: "radio", value: "25", name: "freight", id: "fifty", checked: value == 25 });
+                var label2 = $("<span />", { html: "50" });
+                var radio2 = $("<input>", { type: "radio", value: "50", name: "freight", id: "fifty", checked: value == 50 });
+                var label3 = $("<span />", { html: "100" });
+                var radio3 = $("<input>", { type: "radio", value: "100", name: "freight", id: "hundred", checked: value == 100 });
+
+                span.append(label).append(radio).append(label1).append(radio1).append(label2).append(radio2).append(label3).append(radio3);
+
+                return span;
+            }
+
+            // The javascript executed specified by JQGridColumn.EditTypeCustomGetValue when EditType = EditType.Custom
+            // One parameter passed - the custom element created in JQGridColumn.EditTypeCustomCreateElement
+            function getFreightElementValue(elem, oper, value) {
+                if (oper === "set") {
+                    var radioButton = $(elem).find("input:radio[value='" + value + "']");
+                    if (radioButton.length > 0) {
+                        radioButton.prop("checked", true);
+                    }
+                }
+
+                if (oper === "get") {
+                    return $(elem).find("input:radio:checked").val();
+                }
+            }
+
+        });
+
+    </script>
+
+    <!-- This code is related to code tabs -->
+    <br />
+    <span style="font-size: 12px; font-family: Tahoma">Click on the Tabs below the see the relevant code for the example:</span>
+    <br /><br />
+    <!--<div id="codetabs" style="width:700px; height: 400px; font-size:65%;"></div>-->
+    
+</body>
+</html>
